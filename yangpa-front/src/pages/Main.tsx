@@ -8,15 +8,8 @@ const Main: React.FC = () => {
     const isPortrait = useMediaQuery({query: '(orientation: portrait)'});
 
     return (
-        <div>
+        <div className={"pc-mainpage"}>
             <SearchPart/>
-
-            {
-                isPortrait
-                    ? <></>
-                    : <></>
-            }
-
             <SearchNavigate/>
         </div>
     );

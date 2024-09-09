@@ -1,0 +1,66 @@
+.pc-chat-sidebar {
+  height: calc(100vh - 72px);
+  background: #59A6FA;
+  width: 20vw;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  position: relative;
+
+  &.collapsed {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+.pc-chat-sidebar-btn {
+  position: absolute;
+  bottom: 3vh;
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 0.5rem;
+  align-items: center;
+}
+
+.pc-chat-sidebar-btn img:first-child {
+  position: absolute;
+  bottom: 0;
+  left: 0.5rem;
+  transition: bottom 0.3s ease;
+}
+
+.pc-chat-sidebar-btn img:last-child {
+  position: absolute;
+  transition: left 0.3s ease;
+}
+
+.pc-chat-body {
+  position: absolute;
+  top: 4.2rem;
+  bottom: 9vh;
+  left: 0;
+  right: 0;
+  border: 1px solid black;
+  overflow-y: auto;
+}
+
+.content-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  transition: width 0.3s ease;
+
+  &.collapsed {
+    width: calc(100vw - 10.2vw);
+    height: calc(100vh - 10.3vh);
+    top: 10vh;
+    left: 10vw;
+  }
+
+  &.expanded {
+    width: calc(100vw - 20vw);
+    height: calc(100vh - 8.7vh);
+    top: 8.4vh;
+    left: 19.9vw;
+  }
+}
