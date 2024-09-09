@@ -1,5 +1,4 @@
 import React from 'react';
-import {useMediaQuery} from "react-responsive";
 import {Routes, Route, Link} from 'react-router-dom';
 import Main from "./pages/Main";
 import Login from "./pages/Login";
