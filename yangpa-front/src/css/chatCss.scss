@@ -1,8 +1,8 @@
 .pc-chat-sidebar {
-  height: calc(100vh - 72px);
+  height: calc(100vh - 4.5rem);
   background: #59A6FA;
   width: 20vw;
-  transition: width 0.3s ease, opacity 0.3s ease;
+  transition: width 0.3s ease, opacity 0.3s ease, left 0.3s ease; /* Include left transition */
   overflow: hidden;
   position: relative;
 
@@ -11,6 +11,7 @@
     opacity: 0;
   }
 }
+
 
 .pc-chat-sidebar-btn {
   position: absolute;
@@ -45,22 +46,24 @@
 
 .content-container {
   position: absolute;
-  top: 0;
+  top: 7.5%;
   bottom: 0;
   right: 0;
-  transition: width 0.3s ease;
+  left: 20vw;
+  transition: left 0.3s ease, width 0.3s ease;
+  border: 1px solid black;
+  height: 92.3%;
+  //height: calc(100vh - 9.3vh);
+  overflow: hidden;
 
   &.collapsed {
-    width: calc(100vw - 10.2vw);
-    height: calc(100vh - 10.3vh);
-    top: 10vh;
     left: 10vw;
+    width: calc(100vw - 10.4vw);
   }
 
   &.expanded {
-    width: calc(100vw - 20vw);
-    height: calc(100vh - 8.7vh);
-    top: 8.4vh;
-    left: 19.9vw;
+    left: 20vw;
+    width: calc(100vw - 20.4vw);
   }
 }
+

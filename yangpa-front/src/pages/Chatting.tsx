@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Sidebar from "../components/desktop/chat/Sidebar";
 import "../css/chatCss.scss";
-import ChatContent from "../components/desktop/chat/ChatContent";
+import {useMediaQuery} from "react-responsive";
 
 const Chatting: React.FC = () => {
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const isPortrait = useMediaQuery({query: '(orientation: portrait)'});
 
     const toggleSidebar = () => {
         setSidebarCollapsed(!isSidebarCollapsed);
