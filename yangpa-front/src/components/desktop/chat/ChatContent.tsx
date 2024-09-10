@@ -1,11 +1,14 @@
 import React from "react";
 import {TextField} from "@mui/material";
+import ChatPartDefault from "./ChatPartDefault";
 
 const ChatContent: React.FC = () => {
     const makeSx = {
-        backgroundColor: "white",
+        width: "70%",
+        backgroundColor: "#F4F4F4",
         borderRadius: "15px",
-        border: "black",
+        border: "none",
+        boxShadow: "2px 2px 5px #DADADA",
         "& .MuiOutlinedInput-root": {
             "& fieldset": {
                 border: "none",
@@ -30,23 +33,18 @@ const ChatContent: React.FC = () => {
         <div className={"pc-show-chat"}>
             <div className={"pc-chat-part"}>
                 {/* 채팅 공간 */}
-                <div className={"pc-ask"}>
-                    <span>육아 고민을 물어보세요</span>
-                    <div><span>애기가 편식을 너무 심하게 해</span></div>
-                    <div><span>책을 어떻게 읽어 줘야 할까</span></div>
-                    <div><span>오은영 10계명 알려줘</span></div>
-                </div>
+                <ChatPartDefault/>
             </div>
 
             <div className={"pc-chat-input"}>
                 <TextField
                     id="outlined-basic"
-                    label="육아 고민 AI에게 물어보기"
+                    label="육아 고민을 적어주세요"
                     variant="outlined"
                     sx={makeSx}
                     InputProps={{
                         endAdornment: (
-                            <img className={"pc-search-icon"} src={"/img/search.png"} alt={""}/>
+                            <img className={"pc-chat-icon"} src={"/img/search.png"} alt={""}/>
                         ),
                     }}
                 />
