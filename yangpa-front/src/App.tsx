@@ -19,7 +19,9 @@ const App: React.FC = () => {
                 <Route path="/test" element={<Testpage/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/chat" element={<Chatting/>}/>
-                <Route path="/community" element={<Community/>}/>
+                <Route path="/community" element={<Community/>}>
+                    <Route path=":community" element={<Community/>}/>
+                </Route>
             </Routes>
         </div>
     );

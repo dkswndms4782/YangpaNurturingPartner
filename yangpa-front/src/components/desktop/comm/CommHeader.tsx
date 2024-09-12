@@ -3,10 +3,14 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import CommDate from "./CommDate";
 
-const CommHeader: React.FC = () => {
+export interface commheaderprops {
+    write: boolean;
+    setWrite: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CommHeader: React.FC<commheaderprops> = ({write, setWrite}) => {
     const [selectedTab, setSelectedTab] = React.useState(0);
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -70,7 +74,8 @@ const CommHeader: React.FC = () => {
                 </Stack>
             </div>
 
-            <CommDate/>
+            {write ? <></> : <CommDate setWrite={setWrite}/>}
+
         </div>
     );
 };

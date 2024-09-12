@@ -5,6 +5,8 @@
   height: 60px;
   padding: 6px;
 
+  border-bottom: 1px solid #dddddd;
+
   .pc-img-div {
     height: 100%;
     display: flex;
@@ -17,21 +19,6 @@
   }
 
   .pc-choose-child {
-    display: flex;
-  }
-}
-
-.ph-header {
-  display: flex;
-  justify-content: space-between;
-  height: 45px;
-  padding: 5px;
-
-  .ph-logo-img {
-    height: 100%;
-  }
-
-  .ph-choose-child {
     display: flex;
   }
 }

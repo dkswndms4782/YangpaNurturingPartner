@@ -1,8 +1,12 @@
 import React from "react";
-import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Box, FormControl, MenuItem, Select, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 
-const CommDate: React.FC = () => {
+export interface commDateprops {
+    setWrite: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CommDate: React.FC<commDateprops> = ({setWrite}) => {
 
     const [period, setPeriod] = React.useState('전체기간');
     const [filter, setFilter] = React.useState('제목만');
@@ -64,7 +68,11 @@ const CommDate: React.FC = () => {
                 </FormControl>
             </Box>
 
-            <Button variant="contained" color="primary">
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setWrite(true)}
+            >
                 글쓰기
             </Button>
         </div>
