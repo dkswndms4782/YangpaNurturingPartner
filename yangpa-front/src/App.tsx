@@ -7,6 +7,7 @@ import Header from "./components/common/header/Header";
 import Chatting from "./pages/Chatting";
 import Community from "./pages/Community";
 import CommContent from "./pages/CommContent";
+import TotalSearch from "./pages/TotalSearch";
 
 
 const App: React.FC = () => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
                 <Route path="/community" element={<Community/>}>
                     <Route path=":id" element={<CommContent/>}/>
                 </Route>
+                <Route path="/search" element={<TotalSearch/>}/>
             </Routes>
         </div>
     );

@@ -1,10 +1,13 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 const SearchNavigate: React.FC = () => {
 
+    const navigate = useNavigate();
+
     return (
         <div className={"pc-search-navigate"}>
-            <div className={"pc-search-navigate-icon"}>
+            <div className={"pc-search-navigate-icon"} onClick={() => navigate("/chat")}>
                 <img src={"/img/goChat.png"} alt={""} style={{width: "4.5rem"}}/>
                 <span className={"pc-search-navigate-icon-title"}>채팅하기</span>
                 <div className={"pc-search-navigate-icon-span"}>
@@ -13,7 +16,7 @@ const SearchNavigate: React.FC = () => {
                 </div>
             </div>
 
-            <div className={"pc-search-navigate-icon"}>
+            <div className={"pc-search-navigate-icon"} onClick={() => navigate("/search")}>
                 <img src={"/img/goSearch.png"} alt={""}
                      style={{width: "3.8rem", marginBottom: "1.5rem", marginTop: "1rem"}}/>
                 <span className={"pc-search-navigate-icon-title"}>통합검색</span>
@@ -26,7 +29,7 @@ const SearchNavigate: React.FC = () => {
                 </div>
             </div>
 
-            <div className={"pc-search-navigate-icon"}>
+            <div className={"pc-search-navigate-icon"} onClick={() => navigate("/community")}>
                 <img src={"/img/goCommunity.png"} alt={""} style={{width: "5rem"}}/>
                 <span className={"pc-search-navigate-icon-title"}>커뮤니티</span>
                 <div className={"pc-search-navigate-icon-span"}>
