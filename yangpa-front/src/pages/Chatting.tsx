@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Sidebar from "../components/desktop/chat/Sidebar";
 import "../css/chatCss.scss";
 import {useMediaQuery} from "react-responsive";
@@ -15,7 +15,7 @@ const Chatting: React.FC = () => {
 
     return (
         <>
-            <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+            <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar}/>
             <div
                 className={`content-container ${isSidebarCollapsed ? "collapsed" : "expanded"}`}>
                 <ChatContent/>
