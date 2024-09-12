@@ -6,6 +6,7 @@ import Testpage from "./pages/Testpage";
 import Header from "./components/common/header/Header";
 import Chatting from "./pages/Chatting";
 import Community from "./pages/Community";
+import CommContent from "./pages/CommContent";
 
 const App: React.FC = () => {
     const location = useLocation();
@@ -20,7 +21,7 @@ const App: React.FC = () => {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/chat" element={<Chatting/>}/>
                 <Route path="/community" element={<Community/>}>
-                    <Route path=":community" element={<Community/>}/>
+                    <Route path=":id" element={<CommContent/>}/>
                 </Route>
             </Routes>
         </div>
