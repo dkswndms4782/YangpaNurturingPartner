@@ -14,12 +14,11 @@ interface ChatContentProps {
     query: string;
     setQuery: Dispatch<SetStateAction<string>>;
     isChatEnded: boolean;
-    handleNewChat: () => void;
-    handleEndChat: () => void; // handleEndChat을 props로 추가합니다
+    endstartChat: () => void;
     session_id: string;
 }
 
-const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query, setQuery, isChatEnded, handleNewChat, handleEndChat, session_id }) => {
+const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query, setQuery, isChatEnded, endstartChat, session_id }) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (isChatEnded || !session_id || !query.trim()) return; // query가 비어있으면 리턴
@@ -96,11 +95,8 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query,
                         <IconButton type="submit" disabled={isChatEnded}>
                             <img src="/img/send.png" alt="Send" />
                         </IconButton>
-                        <IconButton type="button" onClick={handleNewChat} disabled={isChatEnded}>
-                            새로운 채팅
-                        </IconButton>
-                        <IconButton type="button" onClick={handleEndChat} disabled={isChatEnded}>
-                            채팅 종료
+                        <IconButton type="button" onClick={endstartChat} disabled={isChatEnded}>
+                            새로운 채팅 시작
                         </IconButton>
                     </div>
                 </form>

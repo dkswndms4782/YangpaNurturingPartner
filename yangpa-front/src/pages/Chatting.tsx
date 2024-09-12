@@ -25,27 +25,24 @@ const Chatting: React.FC = () => {
         setSidebarCollapsed(prev => !prev);
     };
 
-    const handleNewChat = async () => {
+    const endstartChat = async () => {
         try {
+            if (currentSession_id) {
+                //세션 종료
+                await axios.post('http://localhost:8080/chat/end-chat', null, { params: { session_id: currentSession_id } });
+                setIsChatEnded(true);
+                setMessages(prevMessages => [...prevMessages, { type: 'bot', text: '채팅이 종료되었습니다.' }]);
+            }
+    
+            //새로운 세션 시작
             const response = await axios.post('http://localhost:8080/chat/start-new-chat');
             const newSession_id = response.data.session_id;
             setCurrentSession_id(newSession_id);
-            // 채팅 내용 초기화
             setMessages([]);
             setQuery('');
             setIsChatEnded(false);
         } catch (error) {
-            console.error('새로운 채팅 시작 오류:', error);
-        }
-    };
-
-    const handleEndChat = async () => {
-        try {
-            await axios.post('http://localhost:8080/chat/end-chat', null, { params: { session_id: currentSession_id } });
-            setIsChatEnded(true);
-            setMessages(prevMessages => [...prevMessages, { type: 'bot', text: '채팅이 종료되었습니다.' }]);
-        } catch (error) {
-            console.error('채팅 종료 오류:', error);
+            console.error('채팅 종료 및 시작 오류:', error);
         }
     };
 
@@ -82,8 +79,7 @@ const Chatting: React.FC = () => {
                     query={query}
                     setQuery={setQuery}
                     isChatEnded={isChatEnded}
-                    handleNewChat={handleNewChat}
-                    handleEndChat={handleEndChat} // handleEndChat을 전달합니다
+                    endstartChat={endstartChat}
                     session_id={currentSession_id || ''}
                 />
             </div>
