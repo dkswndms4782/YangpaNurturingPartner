@@ -3,13 +3,11 @@ import { TextField, IconButton } from "@mui/material";
 import ChatPartDefault from "./ChatPartDefault";
 import axios from "axios";
 
-// Message 타입 정의
 interface Message {
     type: 'user' | 'bot' | 'error';
     text: string;
 }
 
-// Props 타입 정의
 interface ChatContentProps {
     messages: Message[];
     setMessages: Dispatch<SetStateAction<Message[]>>;
@@ -23,17 +21,17 @@ interface ChatContentProps {
 const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query, setQuery, isChatEnded, handleNewChat, session_id }) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (isChatEnded || !session_id) return;
-
+        if (isChatEnded || !session_id || !query.trim()) return; // query가 비어있으면 리턴
+    
         const userMessage: Message = { type: 'user', text: query };
         setMessages(prevMessages => [...prevMessages, userMessage]);
-
+    
         try {
             const response = await axios.post('http://localhost:8080/chat/message', {
                 session_id,
                 chat_detail: { query }
             });
-            const botMessage: Message = { type: 'bot', text: response.data.answer };
+            const botMessage: Message = { type: 'bot', text: response.data.answer || '답변이 없습니다.' }; 
             setMessages(prevMessages => [...prevMessages, userMessage, botMessage]);
             setQuery('');
         } catch (error) {
@@ -42,7 +40,23 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query,
             console.error('오류 발생:', error);
         }
     };
-
+    
+    const handleEndChat = async () => {
+        try {
+            await axios.post('http://localhost:8080/chat/end-chat', null, { params: { session_id } });
+            setMessages(prevMessages => [...prevMessages, { type: 'bot', text: '채팅이 종료되었습니다.' }]);
+        } catch (error) {
+            if (error instanceof Error) {
+                // Error 객체일 때 처리
+                console.error('채팅 종료 오류:', error.message);
+                console.error('스택 트레이스:', error.stack);
+            } else {
+                // Error 객체가 아닐 때 처리
+                console.error('알 수 없는 오류:', error);
+            }
+        }
+    };
+    
     return (
         <div className="pc-show-chat">
             <div className="pc-chat-part">
@@ -98,7 +112,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query,
                             <img src="/img/send.png" alt="Send" />
                         </IconButton>
                         <IconButton type="button" onClick={handleNewChat} disabled={isChatEnded}>
-                            새로운 채팅 시작하기
+                            새로운 채팅 
+                        </IconButton>
+                        <IconButton type="button" onClick={handleEndChat} disabled={isChatEnded}>
+                            채팅 종료
                         </IconButton>
                     </div>
                 </form>
