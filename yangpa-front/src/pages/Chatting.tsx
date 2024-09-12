@@ -3,7 +3,7 @@ import Sidebar from "../components/desktop/chat/Sidebar";
 import "../css/chatCss.scss";
 import { useMediaQuery } from "react-responsive";
 import ChatContent from "../components/desktop/chat/ChatContent";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // Message 타입 정의
@@ -16,14 +16,13 @@ const Chatting: React.FC = () => {
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
     const { session_id } = useParams();
-    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isChatEnded, setIsChatEnded] = useState(false);
     const [currentSession_id, setCurrentSession_id] = useState<string | null>(session_id || null);
 
     const toggleSidebar = () => {
-        setSidebarCollapsed(!isSidebarCollapsed);
+        setSidebarCollapsed(prev => !prev);
     };
 
     const handleNewChat = async () => {
@@ -37,6 +36,16 @@ const Chatting: React.FC = () => {
             setIsChatEnded(false);
         } catch (error) {
             console.error('새로운 채팅 시작 오류:', error);
+        }
+    };
+
+    const handleEndChat = async () => {
+        try {
+            await axios.post('http://localhost:8080/chat/end-chat', null, { params: { session_id: currentSession_id } });
+            setIsChatEnded(true);
+            setMessages(prevMessages => [...prevMessages, { type: 'bot', text: '채팅이 종료되었습니다.' }]);
+        } catch (error) {
+            console.error('채팅 종료 오류:', error);
         }
     };
 
@@ -74,6 +83,7 @@ const Chatting: React.FC = () => {
                     setQuery={setQuery}
                     isChatEnded={isChatEnded}
                     handleNewChat={handleNewChat}
+                    handleEndChat={handleEndChat} // handleEndChat을 전달합니다
                     session_id={currentSession_id || ''}
                 />
             </div>
