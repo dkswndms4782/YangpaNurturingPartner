@@ -2,6 +2,7 @@ import React from 'react';
 import {useMediaQuery} from "react-responsive";
 import "../commonCss.scss"
 import {FormControl, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import HeaderMenu from "./HeaderMenu";
 
 const Header: React.FC = () => {
     const isPortrait = useMediaQuery({query: '(orientation: portrait)'});
@@ -37,7 +38,9 @@ const Header: React.FC = () => {
                         </Select>
                     </FormControl>
 
-                    {isPortrait ? <></> : <div className={"child-img"}></div>}
+                    {isPortrait ? <></>
+                        : <HeaderMenu/>
+                    }
                 </div>
             </div>
         </div>
