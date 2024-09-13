@@ -10,20 +10,28 @@ interface ChatDetailProps {
 
 const ChatDetail: React.FC<ChatDetailProps> = ({ chatDetail }) => {
     return (
-        <div>
-            <h1>채팅 상세</h1>
-            <div>
-                {chatDetail.length > 0 ? (
-                    chatDetail.map((detail, index) => (
-                        <div key={index}>
-                            <p><strong>질문:</strong> {detail.query}</p>
-                            <p><strong>답변:</strong> {detail.answer}</p>
-                            <p><strong>시간:</strong> {new Date(detail.qa_time).toLocaleString()}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>채팅 상세 정보가 없습니다.</p>
-                )}
+        <div className="pc-show-chat">
+            <div className="pc-chat-part">
+                <div style={{ height: '100%', width: '100%', overflowY: 'scroll' }}>
+                    <div style={{ padding: '10px' }}>
+                        {chatDetail.length > 0 ? (
+                            chatDetail.map((detail, index) => (
+                                <div key={index}>
+                                    <div style={{ textAlign: 'right', margin: '5px 0' }}>
+                                        <strong>사용자:</strong> {detail.query}
+                                        <p style={{ fontSize: '12px', color: '#888' }}>{new Date(detail.qa_time).toLocaleString()}</p>
+                                    </div>
+                                    <div style={{ textAlign: 'left', margin: '5px 0' }}>
+                                        <strong>챗봇:</strong> {detail.answer}
+                                        <p style={{ fontSize: '12px', color: '#888' }}>{new Date(detail.qa_time).toLocaleString()}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className={"no-records"}>채팅 기록이 없습니다.</div>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
