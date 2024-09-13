@@ -3,6 +3,7 @@ import Sidebar from "../components/desktop/chat/Sidebar";
 import "../css/chatCss.scss";
 import { useMediaQuery } from "react-responsive";
 import ChatContent from "../components/desktop/chat/ChatContent";
+import ChatDetail from "../components/desktop/chat/ChatDetail";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,14 +16,28 @@ interface Message {
 const Chatting: React.FC = () => {
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
-    const { session_id } = useParams();
+    const { session_id } = useParams();  // 현재 session_id가 아니라 요약에서 받은 session_id를 사용해야 함
     const [query, setQuery] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isChatEnded, setIsChatEnded] = useState(false);
     const [currentSession_id, setCurrentSession_id] = useState<string | null>(session_id || null);
+    const [chatDetail, setChatDetail] = useState<any[]>([]); // 채팅 상세 정보를 저장할 상태
+    const [showChatDetail, setShowChatDetail] = useState(false); // 채팅 상세 컴포넌트 표시 상태
 
     const toggleSidebar = () => {
         setSidebarCollapsed(prev => !prev);
+    };
+
+    const onSummaryClick = async (sessionId: string) => {
+        // 요약을 클릭했을 때 채팅 상세 정보를 가져오는 함수
+        console.log("Clicked session ID:", sessionId); // 추가된 로그
+        try {
+            const response = await axios.get(`http://localhost:8080/chat/chat-history/${sessionId}`);
+            setChatDetail(response.data);
+            setShowChatDetail(true); // 채팅 상세 컴포넌트를 표시
+        } catch (error) {
+            console.error('채팅 상세 불러오기 오류:', error);
+        }
     };
 
     const endstartChat = async () => {
@@ -71,17 +86,25 @@ const Chatting: React.FC = () => {
 
     return (
         <>
-            <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+            <Sidebar 
+                isCollapsed={isSidebarCollapsed} 
+                toggleSidebar={toggleSidebar} 
+                onSummaryClick={onSummaryClick} // 요약 클릭 이벤트 핸들러 전달
+            />
             <div className={`content-container ${isSidebarCollapsed ? "collapsed" : "expanded"}`}>
-                <ChatContent
-                    messages={messages}
-                    setMessages={setMessages}
-                    query={query}
-                    setQuery={setQuery}
-                    isChatEnded={isChatEnded}
-                    endstartChat={endstartChat}
-                    session_id={currentSession_id || ''}
-                />
+                {showChatDetail ? (
+                    <ChatDetail chatDetail={chatDetail} />
+                ) : (
+                    <ChatContent
+                        messages={messages}
+                        setMessages={setMessages}
+                        query={query}
+                        setQuery={setQuery}
+                        isChatEnded={isChatEnded}
+                        endstartChat={endstartChat}
+                        session_id={currentSession_id || ''}
+                    />
+                )}
             </div>
         </>
     );

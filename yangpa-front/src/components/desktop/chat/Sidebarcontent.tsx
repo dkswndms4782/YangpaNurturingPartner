@@ -1,69 +1,66 @@
 import React, { useEffect, useState } from "react";
-import Goback from "../../common/Goback";
 import axios from "axios";
 
-interface SidebarProps {
-    isCollapsed: boolean;
-    toggleSidebar: () => void;
-}
-
 interface ChatSummary {
-    endTime: string;
+    session_id: string;
+    end_time: string;
     summ_answer: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
-    const [chatSummary, setChatSummary] = useState<ChatSummary | null>(null);
+interface SidebarContentProps {
+    onSummaryClick: (session_id: string) => void;
+}
+
+const SidebarContent: React.FC<SidebarContentProps> = ({ onSummaryClick }) => {
+    const [chatSummaries, setChatSummaries] = useState<ChatSummary[]>([]);
 
     useEffect(() => {
-        const fetchChatSummary = async () => {
+        const fetchChatSummaries = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/chat/chat-record');
-                setChatSummary(response.data);
+                const user_id = "kim123";
+
+                // 유저 아이디로 세션 아이디를 가져옴
+                const sessionIdsResponse = await axios.post('http://localhost:8080/chat/get-userinfo', {user_id});
+                const sessionIds = sessionIdsResponse.data;
+
+                console.log("세션아이디:", sessionIds);
+
+                // sessionIds가 빈 배열인지 확인
+                if (!sessionIds || sessionIds.length === 0) {
+                    console.warn("세션 아이디가 없습니다.");
+                    return;
+                }
+
+                // 채팅 요약 요청
+                const response = await axios.post('http://localhost:8080/chat/chat-record', sessionIds);
+                setChatSummaries(response.data);
             } catch (error) {
                 console.error('채팅 요약 불러오기 오류:', error);
             }
         };
 
-        fetchChatSummary();
+        fetchChatSummaries();
     }, []);
 
     return (
-        <>
-            <Goback where={"채팅"} />
-            <div className={`pc-chat-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-                {!isCollapsed && chatSummary && (
-                    <div className={"pc-chat-body"}>
+        <div className={"pc-chat-body"}>
+            {chatSummaries.length > 0 ? (
+                chatSummaries.map((summary, index) => (
+                    <div key={index} className="chat-summary-item">
                         <div className={"chat-summary-header"}>
-                            <span>{new Date(chatSummary.endTime).toLocaleDateString()}</span>
+                            <span>{new Date(summary.end_time).toLocaleDateString()}</span>
                         </div>
                         <div className={"chat-summary-content"}>
-                            {chatSummary.summ_answer}
+                            {summary.summ_answer}
                         </div>
                     </div>
-                )}
-            </div>
-            <div className={"pc-chat-sidebar-btn"}>
-                <img
-                    src={"/img/spreadbtn.png"}
-                    alt={""}
-                    onClick={toggleSidebar}
-                    style={{ cursor: "pointer" }}
-                />
-                <img
-                    src={"/img/write.png"}
-                    alt={""}
-                    style={{
-                        cursor: "pointer",
-                        position: "absolute",
-                        left: isCollapsed ? '4vw' : '17vw',
-                        bottom: "0.2vh",
-                        transition: "left 0.3s ease"
-                    }}
-                />
-            </div>
-        </>
+                ))
+            ) : (
+                <div className={"no-records"}>채팅 기록이 없습니다.</div>
+            )}
+        </div>
     );
 };
 
-export default Sidebar;
+
+export default SidebarContent;

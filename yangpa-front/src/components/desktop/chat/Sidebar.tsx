@@ -1,21 +1,19 @@
 import React from "react";
 import Goback from "../../common/Goback";
+import SidebarContent from "./SidebarContent";
 
 interface SidebarProps {
     isCollapsed: boolean;
     toggleSidebar: () => void;
+    onSummaryClick: (session_id: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar, onSummaryClick }) => {
     return (
         <>
             <Goback where={"채팅"} />
             <div className={`pc-chat-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-                {!isCollapsed && (
-                    <div className={"pc-chat-body"}>
-                        123
-                    </div>
-                )}
+                {!isCollapsed && <SidebarContent onSummaryClick={onSummaryClick} />}
             </div>
             <div className={"pc-chat-sidebar-btn"}>
                 <img
@@ -41,3 +39,5 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
 };
 
 export default Sidebar;
+
+
