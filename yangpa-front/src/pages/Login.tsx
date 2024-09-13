@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import React, {useState} from 'react';
+import {GoogleOAuthProvider, GoogleLogin} from '@react-oauth/google';
 import '../css/loginCss.scss';
 import {useNavigate} from "react-router-dom";
 
@@ -12,11 +12,14 @@ const LoginPage: React.FC = () => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login attempt with:', { id, password, rememberMe });
+        // console.log('Login attempt with:', {id, password, rememberMe});
+
+        if (id === "admin" && password === "admin") navigate("/profile")
     };
 
     const handleGoogleLoginSuccess = (credentialResponse: any) => {
-        console.log('Google Login Success:', credentialResponse);
+        // console.log('Google Login Success:', credentialResponse);
+        navigate("/profile")
     };
 
     const handleGoogleLoginFailure = () => {
@@ -28,11 +31,12 @@ const LoginPage: React.FC = () => {
             <div className="login-page">
                 <div className="login-container">
                     <div className="image-container">
-                        <img src="/img/mainPaint.png" alt="Mother and child with onion character" className="login-image" />
-                        <p className="image-caption">"이번 생에 부모는 처음이니까"<br />저희가 함께 도와드리겠습니다.</p>
+                        <img src="/img/mainPaint.png" alt="Mother and child with onion character"
+                             className="login-image"/>
+                        <p className="image-caption">"이번 생에 부모는 처음이니까"<br/>저희가 함께 도와드리겠습니다.</p>
                     </div>
                     <div className="form-container">
-                        <img src="/img/logo.png" alt="YANGPA Logo" className="logo" />
+                        <img src="/img/logo.png" alt="YANGPA Logo" className="logo"/>
                         <form onSubmit={handleLogin}>
                             <input
                                 type="text"
@@ -62,9 +66,6 @@ const LoginPage: React.FC = () => {
                                     text="signin_with"
                                     shape="pill"
                                 />
-                                <a href="#">
-                                    <p>아이디 찾기 / 비밀번호 찾기</p>
-                                </a>
                             </div>
                             <div className="btnArea">
                                 <button type="button" className="register-button">회원가입</button>
