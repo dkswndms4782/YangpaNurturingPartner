@@ -100,22 +100,23 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ viewChatDetail }) => {
                     ),
                 }}
             />
-            {filteredSummaries.length > 0 ? (
-                filteredSummaries.map((summary, index) => (
-                    <div key={index} className="chat-summary-item" onClick={() => viewChatDetail(summary.session_id)}>
-                        <div className="chat-summary-header">
-                            <span>{new Date(summary.end_time).toLocaleDateString()}</span>
+            <div className="pc-chat-body-searchHistory">
+                {filteredSummaries.length > 0 ? (
+                    filteredSummaries.map((summary, index) => (
+                    <div key={index} className="pc-chat-body-searchHistory-box" onClick={() => viewChatDetail(summary.session_id)}>
+                        <div className="pc-chat-body-day">
+                        <span>{new Date(summary.end_time).toLocaleDateString()}</span>
                         </div>
-                        <div className="chat-summary-content">
-                            {summary.summ_answer}
+                        <div className="pc-chat-body-roomHistory">
+                        {summary.summ_answer}
                         </div>
                     </div>
-                ))
-            ) : (
-                <div className="no-records">채팅 기록이 없습니다.</div>
-            )}
+                    ))
+                ) : (
+                    <div className="no-records">채팅 기록이 없습니다.</div>
+                )}
+            </div>
         </div>
-    );
+    )
 };
-
 export default SidebarContent;
