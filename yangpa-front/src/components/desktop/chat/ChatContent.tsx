@@ -19,6 +19,32 @@ interface ChatContentProps {
 }
 
 const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query, setQuery, isChatEnded, endstartChat, session_id }) => {
+    const makeSx = {
+        width: "70%",
+        backgroundColor: "#F4F4F4",
+        borderRadius: "15px",
+        border: "none",
+        boxShadow: "2px 2px 5px #DADADA",
+        "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+                border: "none",
+            },
+            "&:hover fieldset": {
+                border: "none",
+            },
+            "&.Mui-focused fieldset": {
+                border: "none",
+            },
+        },
+        "& .MuiInputLabel-root": {
+            color: "rgb(AAAAAA)",
+            "&.Mui-focused": {
+                display: "none",
+                color: "black",
+            },
+        },
+    };
+    
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (isChatEnded || !session_id || !query.trim()) return; // query가 비어있으면 리턴
@@ -62,31 +88,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, setMessages, query,
                         id="outlined-basic"
                         label="육아 고민을 적어주세요"
                         variant="outlined"
-                        sx={{
-                            width: "70%",
-                            backgroundColor: "#F4F4F4",
-                            borderRadius: "15px",
-                            border: "none",
-                            boxShadow: "2px 2px 5px #DADADA",
-                            "& .MuiOutlinedInput-root": {
-                                "& fieldset": {
-                                    border: "none",
-                                },
-                                "&:hover fieldset": {
-                                    border: "none",
-                                },
-                                "&.Mui-focused fieldset": {
-                                    border: "none",
-                                },
-                            },
-                            "& .MuiInputLabel-root": {
-                                color: "rgb(AAAAAA)",
-                                "&.Mui-focused": {
-                                    display: "none",
-                                    color: "black",
-                                },
-                            },
-                        }}
+                        sx={makeSx}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         disabled={isChatEnded}
