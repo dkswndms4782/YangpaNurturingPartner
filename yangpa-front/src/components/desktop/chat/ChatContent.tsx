@@ -1,6 +1,7 @@
 import React from "react";
 import {TextField} from "@mui/material";
 import ChatPartDefault from "./ChatPartDefault";
+import ChatCloud from "./ChatCloud";
 
 const ChatContent: React.FC = () => {
     const makeSx = {
@@ -32,8 +33,8 @@ const ChatContent: React.FC = () => {
     return (
         <div className={"pc-show-chat"}>
             <div className={"pc-chat-part"}>
-                {/* 채팅 공간 */}
                 <ChatPartDefault/>
+                {/*<ChatCloud/>*/}
             </div>
 
             <div className={"pc-chat-input"}>
