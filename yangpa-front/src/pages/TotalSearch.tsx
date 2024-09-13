@@ -55,7 +55,7 @@ const TotalSearch: React.FC = () => {
                 <div className={"pc-total-search"}>
                     <TextField
                         id="outlined-basic"
-                        label="검색어를 입력하세요."
+                        placeholder="검색어를 입력하세요."
                         variant="outlined"
                         sx={makeSx}
                         InputProps={{

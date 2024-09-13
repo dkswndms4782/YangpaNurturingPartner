@@ -39,7 +39,7 @@ const ChatContent: React.FC = () => {
             <div className={"pc-chat-input"}>
                 <TextField
                     id="outlined-basic"
-                    label="육아 고민을 적어주세요"
+                    placeholder="육아 고민을 적어주세요"
                     variant="outlined"
                     sx={makeSx}
                     InputProps={{
