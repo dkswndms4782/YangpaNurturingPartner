@@ -5,15 +5,16 @@ import SidebarContent from "./SidebarContent";
 interface SidebarProps {
     isCollapsed: boolean;
     toggleSidebar: () => void;
-    onSummaryClick: (session_id: string) => void;
+    viewChatDetail: (session_id: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar, onSummaryClick }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar, viewChatDetail }) => {
+    
     return (
         <>
             <Goback where={"채팅"} />
             <div className={`pc-chat-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-                {!isCollapsed && <SidebarContent onSummaryClick={onSummaryClick} />}
+                {!isCollapsed && <SidebarContent viewChatDetail={viewChatDetail} />}
             </div>
             <div className={"pc-chat-sidebar-btn"}>
                 <img

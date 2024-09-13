@@ -8,10 +8,10 @@ interface ChatSummary {
 }
 
 interface SidebarContentProps {
-    onSummaryClick: (session_id: string) => void;
+    viewChatDetail: (session_id: string) => void;
 }
 
-const SidebarContent: React.FC<SidebarContentProps> = ({ onSummaryClick }) => {
+const SidebarContent: React.FC<SidebarContentProps> = ({ viewChatDetail }) => {
     const [chatSummaries, setChatSummaries] = useState<ChatSummary[]>([]);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ onSummaryClick }) => {
                 const sessionIds = sessionIdsResponse.data;
 
                 console.log("세션아이디:", sessionIds);
-                
+
                 if (!sessionIds || sessionIds.length === 0) {
                     console.warn("세션 아이디가 없습니다.");
                     return;
@@ -45,7 +45,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ onSummaryClick }) => {
         <div className="pc-chat-body">
             {chatSummaries.length > 0 ? (
                 chatSummaries.map((summary, index) => (
-                    <div key={index} className="chat-summary-item" onClick={() => onSummaryClick(summary.session_id)}>
+                    <div key={index} className="chat-summary-item" onClick={() => viewChatDetail(summary.session_id)}>
                         <div className="chat-summary-header">
                             <span>{new Date(summary.end_time).toLocaleDateString()}</span>
                         </div>

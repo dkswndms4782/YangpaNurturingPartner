@@ -21,23 +21,22 @@ const Chatting: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [isChatEnded, setIsChatEnded] = useState(false);
     const [currentSession_id, setCurrentSession_id] = useState<string | null>(session_id || null);
-    const [chatDetail, setChatDetail] = useState<any[]>([]); // 채팅 상세 정보를 저장할 상태
-    const [showChatDetail, setShowChatDetail] = useState(false); // 채팅 상세 컴포넌트 표시 상태
+    const [chatDetail, setChatDetail] = useState<any[]>([]); 
+    const [showChatDetail, setShowChatDetail] = useState(false);
 
-    const toggleSidebar = () => {
-        setSidebarCollapsed(prev => !prev);
-    };
-
-    const onSummaryClick = async (sessionId: string) => {
-        // 요약을 클릭했을 때 채팅 상세 정보를 가져오는 함수
-        console.log("Clicked session ID:", sessionId); // 추가된 로그
+    const viewChatDetail = async (sessionId: string) => {
+        console.log("Clicked session ID:", sessionId); 
         try {
-            const response = await axios.get(`http://localhost:8080/chat/chat-history/${sessionId}`);
+            const response = await axios.get(`http://localhost:8080/chat/chat-record-view/${sessionId}`);
             setChatDetail(response.data);
-            setShowChatDetail(true); // 채팅 상세 컴포넌트를 표시
+            setShowChatDetail(true);
         } catch (error) {
             console.error('채팅 상세 불러오기 오류:', error);
         }
+    };
+
+    const toggleSidebar = () => {
+        setSidebarCollapsed(prev => !prev);
     };
 
     const endstartChat = async () => {
@@ -89,7 +88,7 @@ const Chatting: React.FC = () => {
             <Sidebar 
                 isCollapsed={isSidebarCollapsed} 
                 toggleSidebar={toggleSidebar} 
-                onSummaryClick={onSummaryClick} // 요약 클릭 이벤트 핸들러 전달
+                viewChatDetail={viewChatDetail} // 요약 클릭 이벤트 핸들러 전달
             />
             <div className={`content-container ${isSidebarCollapsed ? "collapsed" : "expanded"}`}>
                 {showChatDetail ? (
