@@ -93,7 +93,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ viewChatDetail }) => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 label="히스토리 검색"
                 variant="outlined"
-                sx={makeSx}
+                sx={{ ...makeSx, width: '80%', padding: '0.2rem' }}
                 InputProps={{
                     endAdornment: (
                         <img className={"pc-chat-icon"} src={"/img/search.png"} alt={""} style={{ width: "1.5rem" }} />
